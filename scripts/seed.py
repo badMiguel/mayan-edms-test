@@ -90,12 +90,13 @@ if __name__ == "__main__":
     headers["Authorization"] = f"Token {get_api_token()}"
 
     # delete everything if things gets crazy
-    nuke_database()
+    # nuke_database()
 
     if len(get_cabinets()) == 0:
         for i in range(5):
             create_cabinet(f"Seed Cabinet {i + 1}")
 
     if len(get_documents()) == 0:
+        file_path = os.path.join(DIR, "tests", "data", "TestFile.pdf")
         for i in range(5):
-            create_document(f"{DIR}/tests/data/TestFile.pdf", f"Seed Document {i + 1}")
+            create_document(file_path, f"Seed Document {i + 1}")
