@@ -81,24 +81,6 @@
 - /api/v4/document_file_actions/
     - GET: list all available document file actions
 
-### Document Type
-
-- /api/v4/document_types/
-    - GET: return list of all document types
-    - POST: create a new document type
-- /api/v4/document_types/_document-type-id_/
-    - DELETE: delete selected document type
-    - GET: return document type details
-    - PUT/PATCH: edit selected document type
-- /api/v4/document_types/_document-type-id_/documents/
-    - GET: return list of document in a document type
-- /api/v4/document_types/_document-type-id_/metadata_types/
-    - GET: return list of document type's metadata type
-    - POST: add metadata type to document type
-
-> [!NOTE]
-> Document Type is responsible for document expiry
-
 ### Metadata Types
 
 - /api/v4/metadata_types/
@@ -124,3 +106,23 @@
     - PUT/PATCH: edit selected tag
 - /api/v4/tags/_tag_id_/documents/
     - GET: returns list of documents in a tag
+
+## UPDATE; THESE NOT NEEDED FOR MODULE A:
+
+### Document Type
+
+- /api/v4/document_types/
+    - GET: return list of all document types
+    - POST: create a new document type
+- /api/v4/document_types/_document-type-id_/
+    - DELETE: delete selected document type
+    - GET: return document type details
+    - PUT/PATCH: edit selected document type
+- /api/v4/document_types/_document-type-id_/documents/
+    - GET: return list of document in a document type
+- /api/v4/document_types/_document-type-id_/metadata_types/
+    - GET: return list of document type's metadata type
+    - POST: add metadata type to document type
+
+> [!NOTE]
+> Document Type is responsible for document expiry
