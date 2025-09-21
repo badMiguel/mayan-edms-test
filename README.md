@@ -75,6 +75,10 @@
 > [!NOTE]
 > make sure to configure metadata in document type to add metadata to document
 
+- /api/v4/document_types/_document-type-id_/metadata_types/
+    - GET: return list of document type's metadata type
+    - POST: add metadata type to document type
+
 #### Tags
 
 - /api/v4/documents/_document_id_/tags/
@@ -85,6 +89,7 @@
 ### Document File Actions
 - /api/v4/document_file_actions/
     - GET: list all available document file actions
+
 ### Metadata Types
 
 - /api/v4/metadata_types/
@@ -124,9 +129,6 @@
     - PUT/PATCH: edit selected document type
 - /api/v4/document_types/_document-type-id_/documents/
     - GET: return list of document in a document type
-- /api/v4/document_types/_document-type-id_/metadata_types/
-    - GET: return list of document type's metadata type
-    - POST: add metadata type to document type
 
 > [!NOTE]
 > Document Type is responsible for document expiry
