@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+curl -X POST http://localhost:8081/api/v4/auth/token/obtain/\?format\=json \
+    -H "Content-Type: application/json" \
+    -d '{"username": "admin", "password": "jQ4AfQX2Ga"}'
