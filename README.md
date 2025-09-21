@@ -34,6 +34,11 @@
     - PUT/PATCH: edit selected cabinet
 - /api/v4/cabinets/_cabinet_id_/documents/
     - GET: returns list of documents in selected cabinet
+- /api/v4/cabinets/_cabinet_id_/documents/add/
+    - POST: add document to cabinet
+    - _note: document can be in multiple cabinets_
+- /api/v4/cabinets/_cabinet_id_/documents/remove/
+    - POST: remove document to cabinet
 
 ### Documents
 
@@ -80,7 +85,6 @@
 ### Document File Actions
 - /api/v4/document_file_actions/
     - GET: list all available document file actions
-
 ### Metadata Types
 
 - /api/v4/metadata_types/
