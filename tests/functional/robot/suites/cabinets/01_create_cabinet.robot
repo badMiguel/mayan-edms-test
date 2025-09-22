@@ -77,3 +77,18 @@ Create Child Cabinet Without Label Via API
 
     Should Contain     ${resp}  400
 
+Create Child Cabinet Without Parent
+    [Documentation]     Bad Case. Should NOT be able to create a new child cabinet 
+    ...                 via API without specifying parent field. This just creates
+    ...                 a new parent cabinet.
+
+
+    ${new_label}=   Create Unique Label         Robot_Cabinet
+    ${resp}=        Create Cabinet Via API      ${new_label}    ${EMPTY}
+    ${new_cabinet}  Set Variable                ${resp.json()}
+
+    Should Be Equal As Integers     ${resp.status_code}         201
+    Dictionary Should Contain Key   ${new_cabinet}              id
+    Should Be Equal                 ${new_cabinet["label"]}     ${new_label}
+    Should Be Equal                 ${new_cabinet["parent"]}    ${null}
+
