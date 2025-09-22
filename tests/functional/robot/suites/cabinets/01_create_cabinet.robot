@@ -46,3 +46,13 @@ Create Child Cabinet Via API Successfully
     Dictionary Should Contain Key   ${new_child_cabinet}                  id
     Should Be Equal                 ${new_child_cabinet["label"]}         ${new_child_cabinet_label} 
     Should Be Equal                 ${new_child_cabinet["parent_id"]}     ${new_parent_cabinet["id"]}    
+
+Create Duplicate Child Cabinet Via API Should Fail
+    [Documentation]     Bad Case. Should NOT be able to create a new child cabinet 
+    ...                 via API with specified parent cabinet id if the child cabinet
+    ...                 label already exists.
+
+    ${resp}=    Run Keyword And Expect Error    HTTPError: 400 Client Error: Bad Request*
+    ...         Create Cabinet Via API    ${new_child_cabinet_label}  ${new_parent_cabinet["id"]}
+
+    Should Contain     ${resp}  400
