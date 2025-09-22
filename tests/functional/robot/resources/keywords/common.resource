@@ -7,6 +7,7 @@ Library     RequestsLibrary
 Library     DatabaseLibrary
 Library     Collections
 Library     String
+Library    SeleniumLibrary
 
 
 *** Keywords ***
@@ -52,3 +53,9 @@ Connect To PostgreSQL
     ...     ${DBHOST}    
     ...     ${DBPORT}
 
+Login Via UI
+    Open Browser    ${BASE_URL}/authentication/login/       ${BROWSER}
+    Input Text      id=id_username     ${USERNAME}
+    Input Text      id=id_password     ${PASSWORD}
+    Click Button    name=submit
+    Wait Until Page Contains    Home    10s

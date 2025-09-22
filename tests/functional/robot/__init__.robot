@@ -12,3 +12,4 @@ Init Setup
     Get Headers
     Connect To PostgreSQL
     Run Process     python3     scripts/seed.py
+    Login Via UI
