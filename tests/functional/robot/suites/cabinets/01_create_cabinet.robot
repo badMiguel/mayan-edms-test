@@ -18,9 +18,10 @@ Create Parent Cabinet Via API
     ${new_parent_cabinet}=      Set Variable    ${resp.json()}     
     Set Global Variable         ${new_parent_cabinet}
 
-    Should Be Equal As Integers    ${resp.status_code}    201
-    Dictionary Should Contain Key   ${new_parent_cabinet}              id
-    Should Be Equal                 ${new_parent_cabinet["label"]}     ${new_parent_cabinet_label}
+    Should Be Equal As Integers     ${resp.status_code}                 201
+    Dictionary Should Contain Key   ${new_parent_cabinet}               id
+    Should Be Equal                 ${new_parent_cabinet["label"]}      ${new_parent_cabinet_label}
+    Should Be Equal                 ${new_parent_cabinet["parent"]}     ${null}
 
 # Create Duplicate Parent Cabinet Via API
 #     [Documentation]     Bad Case. Should NOT be able to create a new parent 
