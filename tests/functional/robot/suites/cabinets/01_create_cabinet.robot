@@ -6,18 +6,26 @@ Resource    ../../resources/keywords/common.resource
 Resource    ../../resources/keywords/cabinet.resource
 Library    Collections
 
-*** Variables ***
-${LABEL}    ${EMPTY}
-
 *** Test Cases ***
 Create Parent Cabinet Successfully
     [Documentation]     Good Case. Successfully create a new parent cabinet
     ...                 (no parent field specified).
 
-    ${LABEL}=       Create Unique Label     Robot_Cabinet
-    ${cabinet}=     Create Cabinet Via API  ${LABEL}  
+    ${new_parent_cabinet_label}=    Create Unique Label     Robot_Cabinet
+    Set Global Variable             ${new_parent_cabinet_label}
 
-    Log To Console    ${cabinet}
+    ${cabinet}=     Create Cabinet Via API  ${new_parent_cabinet_label}  
+
+    Dictionary Should Contain Key   ${cabinet}              id
+    Should Be Equal                 ${cabinet["label"]}     ${new_parent_cabinet_label}
+
+# Create Duplicate Parent Cabinet Should Fail
+#     [Documentation]     Bad Case. Should NOT be able to create a new parent 
+#     ...                 cabinet if specified label already exists.
+#
+#     ${cabinet}=     Create Cabinet Via API  ${new_parent_cabinet_label}  
+#     Dictionary Should Contain Key   ${cabinet}              id
+#     Should Not Be Equal             ${cabinet["label"]}     ${new_parent_cabinet_label}
 
     Dictionary Should Contain Key       ${cabinet}              id
     Should Be Equal                     ${cabinet["label"]}     ${LABEL}
