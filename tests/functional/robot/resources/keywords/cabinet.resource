@@ -12,8 +12,6 @@ Create Cabinet Via API
     ...                 /api/v4/cabinets/. 
     [Arguments]         ${label}    ${parent}=
 
-    Get Headers
-
     ${body}=        Create Dictionary   label=${label}  parent=${parent}
     ${resp}=        POST On Session     api         /api/v4/cabinets/    json=${body}
     ...             headers=${HEADERS}

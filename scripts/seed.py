@@ -176,7 +176,7 @@ if __name__ == "__main__":
     headers["Authorization"] = f"Token {get_api_token()}"
 
     # delete everything if things gets crazy
-    # nuke_database()
+    nuke_database()
 
     if len(get_cabinets()) == 0:
         for i in range(5):
