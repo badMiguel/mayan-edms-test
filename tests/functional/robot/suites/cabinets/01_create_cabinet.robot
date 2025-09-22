@@ -92,3 +92,14 @@ Create Child Cabinet Without Parent
     Should Be Equal                 ${new_cabinet["label"]}     ${new_label}
     Should Be Equal                 ${new_cabinet["parent"]}    ${null}
 
+
+Create Child Cabinet With Invalid Parent
+    [Documentation]     Bad Case. Should NOT be able to create a new child cabinet 
+    ...                 via API if parent cabinet does not exist from the specified
+    ...                 parent ID.
+
+    ${new_label}=   Create Unique Label         Robot_Cabinet
+    ${resp}=    Run Keyword And Expect Error    HTTPError: 400 Client Error: Bad Request*
+    ...         Create Cabinet Via API          ${new_label}    0 
+
+    Should Contain     ${resp}  400
