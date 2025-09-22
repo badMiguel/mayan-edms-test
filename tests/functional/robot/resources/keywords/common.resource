@@ -1,24 +1,31 @@
 *** Settings ***
 Documentation       Contains keywords for the test
 
-Resource            ../variables.resource
-Library             RequestsLibrary
+Resource    ../variables.resource
+Library     RequestsLibrary
+Library     Collections
 
 
 *** Keywords ***
-Get Auth Token
+Get Headers
     [Documentation]         Get authentitacation token to attach to headers to skip
     ...                     username password login
 
     Create Session          api    ${BASE_URL}
 
+    ${content_type}=        Create Dictionary   Content-Type=application/json
     ${resp}=                POST On Session
     ...                     api
-    ...                     /api/v4/auth/token/obtain/\?format\=json
+    ...                     url=/api/v4/auth/token/obtain/?format=json
+    ...                     headers=${content_type}
     ...                     data={"username": "admin", "password": "jQ4AfQX2Ga"}
 
-    ${token}=               Get    From    Dictionary    ${resp.json()}    token
-    Set Global Variable     ${AUTH_TOKEN}    ${token}
+    ${token}=               Get From Dictionary     ${resp.json()}      token
+    ${new_headers}=         Create Dictionary       
+    ...                     Content-Type=application/json     Authorization=Token ${token} 
+
+    Set Global Variable     ${HEADERS}      ${new_headers}
+    Set Global Variable     ${AUTH_TOKEN}   ${token}
 
 Create Unique Label
     [Documentation]     Generate a unique label
