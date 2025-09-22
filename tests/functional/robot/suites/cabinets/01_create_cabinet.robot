@@ -31,3 +31,18 @@ Create Parent Cabinet Via API Successfully
 #
 #     Should Contain    ${resp}    400
 
+Create Child Cabinet Via API Successfully
+    [Documentation]     Good Case. Successfully create a new child cabinet via API
+    ...                 with specified parent cabinet id.
+
+    ${new_child_cabinet_label}=     Create Unique Label         Robot_Cabinet
+    Set Global Variable             ${new_child_cabinet_label}
+
+    ${resp}=                Create Cabinet Via API      ${new_child_cabinet_label}      ${new_parent_cabinet["id"]}
+    ${new_child_cabinet}=   Set Variable    ${resp.json()}
+    Set Global Variable     ${new_child_cabinet}
+
+    Should Be Equal As Integers     ${resp.status_code}    201
+    Dictionary Should Contain Key   ${new_child_cabinet}                  id
+    Should Be Equal                 ${new_child_cabinet["label"]}         ${new_child_cabinet_label} 
+    Should Be Equal                 ${new_child_cabinet["parent_id"]}     ${new_parent_cabinet["id"]}    
