@@ -23,7 +23,6 @@ Get Auth Token
 Create Unique Label
     [Documentation]     Generate a unique label
     [Arguments]         ${prefix}
-    ${time}=            Evaluate    int(time.time()) modules=time
+    ${time}=            Evaluate    int(time.time())    modules=time
     ${label}=           Catenate    SEPARATOR=_     ${prefix}   ${time}
-    [Return]            ${label}
-
+    RETURN              ${label}
