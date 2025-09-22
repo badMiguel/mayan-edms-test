@@ -21,23 +21,30 @@ Create Cabinet Via API
     RETURN      ${resp}
 
 Get Cabinet By ID
-    [Arguments]     ${id}
-    ${rows}=        Query   
-    ...             SELECT id,label,parent_id FROM cabinets_cabinet WHERE id = ${id}
-    RETURN          ${rows}
+    [Documentation]     Get cabinet using cabinet ID via database query.
+    [Arguments]         ${id}
+    ${rows}=            Query   
+    ...                 SELECT id,label,parent_id FROM cabinets_cabinet WHERE id = ${id}
+    RETURN              ${rows}
 
 Cabinet Should Exist In DB
-    [Arguments]     ${id}
-    ${rows}=    Get Cabinet By ID    ${id}
-    Should Not Be Empty    ${rows} Cabinet with id ${id} not found
+    [Documentation]         Checks that `Get Cabinet By Id` keyword does not return 
+    ...                     an empty list [].
+    [Arguments]             ${id}
+    ${rows}=                Get Cabinet By ID    ${id}
+    Should Not Be Empty     ${rows} Cabinet with id ${id} not found
 
 Wait For Cabinet By ID To Exist In DB
-    [Arguments]     ${id}   ${timeout}=10s      ${interval}=1s
-    Wait Until Keyword Succeeds    ${timeout}   ${interval}    Cabinet Should Exist In DB   ${id}
+    [Documentation]     Waits until given cabinet exists in the database.
+    [Arguments]         ${id}   ${timeout}=10s      ${interval}=1s
 
+    Wait Until Keyword Succeeds     ${timeout}   ${interval}
+    ...                             Cabinet Should Exist In DB   ${id}
 
 Validate Cabinet In DB
-    [Arguments]     ${id}   ${expected_label}   ${expected_parent_id}=${None}
+    [Documentation]     Checks that the given label and parent matches the details
+    ...                 in the database.
+    [Arguments]         ${id}   ${expected_label}   ${expected_parent_id}=${None}
 
     ${rows}=    Get Cabinet By ID    ${id}
     Should Not Be Empty    ${rows}
