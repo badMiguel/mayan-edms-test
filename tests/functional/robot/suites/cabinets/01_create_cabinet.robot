@@ -22,6 +22,9 @@ Create Parent Cabinet Via API
     Dictionary Should Contain Key   ${new_parent_cabinet}               id
     Should Be Equal                 ${new_parent_cabinet["label"]}      ${new_parent_cabinet_label}
     Should Be Equal                 ${new_parent_cabinet["parent"]}     ${null}
+    
+    Wait For Cabinet By ID To Exist In DB    ${new_parent_cabinet["id"]}
+    Validate Cabinet In DB    ${new_parent_cabinet["id"]}    ${new_parent_cabinet["label"]}
 
 # Create Duplicate Parent Cabinet Via API
 #     [Documentation]     Bad Case. Should NOT be able to create a new parent 
@@ -57,6 +60,9 @@ Create Child Cabinet Via API
     Dictionary Should Contain Key   ${new_child_cabinet}                  id
     Should Be Equal                 ${new_child_cabinet["label"]}         ${new_child_cabinet_label} 
     Should Be Equal                 ${new_child_cabinet["parent_id"]}     ${new_parent_cabinet["id"]}    
+
+    Wait For Cabinet By ID To Exist In DB    ${new_parent_cabinet["id"]}
+    Validate Cabinet In DB    ${new_parent_cabinet["id"]}    ${new_parent_cabinet["label"]}
 
 Create Duplicate Child Cabinet Via API
     [Documentation]     Bad Case. Should NOT be able to create a new child cabinet 
