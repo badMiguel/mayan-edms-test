@@ -83,7 +83,7 @@ Create Child Cabinet Without Label Via API
 
     Should Contain     ${resp}  400
 
-Create Child Cabinet Without Parent
+Create Child Cabinet Without Parent Via API
     [Documentation]     Bad Case. Should NOT be able to create a new child cabinet 
     ...                 via API without specifying parent field. This just creates
     ...                 a new parent cabinet.
@@ -99,7 +99,7 @@ Create Child Cabinet Without Parent
     Should Be Equal                 ${new_cabinet["parent"]}    ${null}
 
 
-Create Child Cabinet With Invalid Parent
+Create Child Cabinet With Invalid Parent Via API
     [Documentation]     Bad Case. Should NOT be able to create a new child cabinet 
     ...                 via API if parent cabinet does not exist from the specified
     ...                 parent ID.
@@ -110,7 +110,7 @@ Create Child Cabinet With Invalid Parent
 
     Should Contain     ${resp}  400
 
-Create Cabinet With Very Long Label
+Create Cabinet With Very Long Label Via API
     [Documentation]     Bad Case. Should NOT be able to create a new cabinet via
     ...                 API if label is greater than 128 characters.
 
