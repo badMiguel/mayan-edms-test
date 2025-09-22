@@ -103,3 +103,18 @@ Create Child Cabinet With Invalid Parent
     ...         Create Cabinet Via API          ${new_label}    0 
 
     Should Contain     ${resp}  400
+
+Create Cabinet With Very Long Label
+    [Documentation]     Bad Case. Should NOT be able to create a new cabinet via
+    ...                 API if label is greater than 128 characters.
+
+    ${new_label}=   Create Very Long Label          129
+    ${resp}=        Run Keyword And Expect Error    HTTPError: 400 Client Error: Bad Request*
+    ...             Create Cabinet Via API          ${new_label}    
+
+    Should Contain     ${resp}  400
+
+    ${new_label}=   Create Very Long Label          128
+    ${resp}=        Create Cabinet Via API          ${new_label}    
+
+    Should Be Equal As Integers     ${resp.status_code}    201

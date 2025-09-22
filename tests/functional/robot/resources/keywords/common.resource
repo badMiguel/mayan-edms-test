@@ -2,8 +2,10 @@
 Documentation       Contains keywords for the test
 
 Resource    ../variables.resource
+
 Library     RequestsLibrary
 Library     Collections
+Library     String
 
 
 *** Keywords ***
@@ -33,3 +35,9 @@ Create Unique Label
     ${time}=            Evaluate    int(time.time())    modules=time
     ${label}=           Catenate    SEPARATOR=_     ${prefix}   ${time}
     RETURN              ${label}
+
+Create Very Long Label
+    [Documentation]     Generate a label with character length 1000.
+    [Arguments]         ${length}=1000  
+    ${long_string}      Generate Random String      ${length}
+    RETURN              ${long_string}
