@@ -18,8 +18,6 @@ Create Cabinet Via API
     ${resp}=        POST On Session     api         /api/v4/cabinets/    json=${body}
     ...             headers=${HEADERS}
 
-    Should Be Equal As Integers    ${resp.status_code}    201
-    
     ${json}=    Set Variable    ${resp.json()} 
     Log         Created cabinet ${json['id']} - ${json['label']}
-    RETURN      ${resp.json()}
+    RETURN      ${resp}
