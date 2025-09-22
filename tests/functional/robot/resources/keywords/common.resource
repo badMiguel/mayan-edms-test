@@ -4,6 +4,7 @@ Documentation       Contains keywords for the test
 Resource    ../variables.resource
 
 Library     RequestsLibrary
+Library     DatabaseLibrary
 Library     Collections
 Library     String
 
@@ -41,3 +42,13 @@ Create Very Long Label
     [Arguments]         ${length}=1000  
     ${long_string}      Generate Random String      ${length}
     RETURN              ${long_string}
+
+Connect To PostgreSQL
+    Connect To Database    
+    ...     ${DBMODULE}    
+    ...     ${DBNAME}    
+    ...     ${DBUSER}    
+    ...     ${DBPASS}    
+    ...     ${DBHOST}    
+    ...     ${DBPORT}
+
