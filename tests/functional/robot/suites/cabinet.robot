@@ -1,10 +1,10 @@
 *** Settings ***
 Documentation   Tests create cabinet functionality
 
-Resource    ../../resources/variables.resource
-Resource    ../../resources/keywords/common.resource
-Resource    ../../resources/keywords/cabinet.resource
-Library    Collections
+Resource    ../resources/variables.resource
+Resource    ../resources/keywords/common.resource
+Resource    ../resources/keywords/cabinet.resource
+Library     Collections
 
 *** Test Cases ***
 Create Parent Cabinet Via API
