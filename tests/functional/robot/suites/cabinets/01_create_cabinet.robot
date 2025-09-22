@@ -7,25 +7,27 @@ Resource    ../../resources/keywords/cabinet.resource
 Library    Collections
 
 *** Test Cases ***
-Create Parent Cabinet Successfully
-    [Documentation]     Good Case. Successfully create a new parent cabinet
-    ...                 (no parent field specified).
+Create Parent Cabinet Via API Successfully
+    [Documentation]     Good Case. Successfully create a new parent cabinet via
+    ...                 API (no parent field specified).
 
     ${new_parent_cabinet_label}=    Create Unique Label     Robot_Cabinet
     Set Global Variable             ${new_parent_cabinet_label}
 
-    ${cabinet}=     Create Cabinet Via API  ${new_parent_cabinet_label}  
+    ${resp}=                    Create Cabinet Via API  ${new_parent_cabinet_label}  
+    ${new_parent_cabinet}=      Set Variable    ${resp.json()}     
+    Set Global Variable         ${new_parent_cabinet}
 
-    Dictionary Should Contain Key   ${cabinet}              id
-    Should Be Equal                 ${cabinet["label"]}     ${new_parent_cabinet_label}
+    Should Be Equal As Integers    ${resp.status_code}    201
+    Dictionary Should Contain Key   ${new_parent_cabinet}              id
+    Should Be Equal                 ${new_parent_cabinet["label"]}     ${new_parent_cabinet_label}
 
-# Create Duplicate Parent Cabinet Should Fail
+# Create Duplicate Parent Cabinet Via API Should Fail
 #     [Documentation]     Bad Case. Should NOT be able to create a new parent 
-#     ...                 cabinet if specified label already exists.
+#     ...                 cabinet via API if specified label already exists.
 #
-#     ${cabinet}=     Create Cabinet Via API  ${new_parent_cabinet_label}  
-#     Dictionary Should Contain Key   ${cabinet}              id
-#     Should Not Be Equal             ${cabinet["label"]}     ${new_parent_cabinet_label}
+#     ${resp}=    Run Keyword And Expect Error    HTTPError: 400 Client Error: Bad Request*
+#     ...         Create Cabinet Via API     ${new_parent_cabinet_label}  
+#
+#     Should Contain    ${resp}    400
 
-    Dictionary Should Contain Key       ${cabinet}              id
-    Should Be Equal                     ${cabinet["label"]}     ${LABEL}
