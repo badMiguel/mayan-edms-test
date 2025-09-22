@@ -124,3 +124,14 @@ Create Cabinet With Very Long Label Via API
     ${resp}=        Create Cabinet Via API          ${new_label}    
 
     Should Be Equal As Integers     ${resp.status_code}    201
+
+Create Cabinet Via UI
+    [Documentation]     Create a cabinet using the UI
+
+    Go To           ${BASE_URL}/cabinets/cabinets/create/
+    ${new_label}=   Create Unique Label     Robot_Cabinet_UI
+    Wait Until Element Is Visible    id=id_label    15s
+    Input Text      id=id_label     ${new_label}
+    Click Button    name=submit
+    Wait Until Page Contains    Cabinet created successfully    10s
+    Wait Until Page Contains    ${new_label}                    10s

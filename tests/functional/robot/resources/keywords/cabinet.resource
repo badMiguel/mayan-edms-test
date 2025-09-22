@@ -20,6 +20,14 @@ Create Cabinet Via API
     Log         Created cabinet ${json['id']} - ${json['label']}
     RETURN      ${resp}
 
+Create Cabinet Via UI
+    [Documentation]     Create a cabinet using the UI
+
+    Open Browser    ${BASE_URL}/cabinets/cabinets/create    ${BROWSER}
+    ${new_label}=   Create Unique Label                     Robot_Cabinet_UI
+    Input Text      id=id_label                             ${new_label}
+    Click Button    name=submit
+
 Get Cabinet By ID
     [Documentation]     Get cabinet using cabinet ID via database query.
     [Arguments]         ${id}
