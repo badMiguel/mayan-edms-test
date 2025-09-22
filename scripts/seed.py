@@ -4,6 +4,7 @@ Populate the database with data.
 
 import os
 import requests
+import psycopg2
 
 BASE = "http://localhost:8081"
 USERNAME = "admin"
@@ -141,36 +142,29 @@ def create_document(path, idx):
     add_metadata.raise_for_status()
 
 
+def truncate_table(table_name):
+    """
+        using direct query to clear table because using request to delete only 
+        deletes 10 items
+    """
+    # no try catch, just stop program when error
+    connection = psycopg2.connect(
+        host="localhost", database="mayan", user="mayan", password="mayandbpass"
+    )
+
+    cursor = connection.cursor()
+    cursor.execute(f"TRUNCATE TABLE {table_name} RESTART IDENTITY CASCADE;")
+    connection.commit()
+    if connection and cursor:
+        cursor.close()
+        connection.close()
+
+
 def nuke_database():
-    # delete all documents
-
-    for i in get_documents():
-        requests.delete(
-            url=f"{BASE}/api/v4/documents/{i["id"]}",
-            headers=headers,
-        )
-
-    # delete all cabinets
-    for i in get_cabinets():
-        requests.delete(
-            url=f"{BASE}/api/v4/cabinets/{i["id"]}",
-            headers=headers,
-        )
-
-    # delete all metadata
-    for i in get_metadata():
-        requests.delete(
-            url=f"{BASE}/api/v4/metadata_types/{i["id"]}",
-            headers=headers,
-        )
-
-    # delete all tags
-    for i in get_tags():
-        requests.delete(
-            url=f"{BASE}/api/v4/tags/{i["id"]}",
-            headers=headers,
-        )
-
+    truncate_table("cabinets_cabinet")
+    truncate_table("documents_document")
+    truncate_table("tags_tag")
+    truncate_table("metadata_metadatatype")
 
 if __name__ == "__main__":
     headers["Authorization"] = f"Token {get_api_token()}"
