@@ -7,7 +7,7 @@ Resource    ../../resources/keywords/cabinet.resource
 Library    Collections
 
 *** Test Cases ***
-Create Parent Cabinet Via API Successfully
+Create Parent Cabinet Via API
     [Documentation]     Good Case. Successfully create a new parent cabinet via
     ...                 API (no parent field specified).
 
@@ -22,7 +22,7 @@ Create Parent Cabinet Via API Successfully
     Dictionary Should Contain Key   ${new_parent_cabinet}              id
     Should Be Equal                 ${new_parent_cabinet["label"]}     ${new_parent_cabinet_label}
 
-# Create Duplicate Parent Cabinet Via API Should Fail
+# Create Duplicate Parent Cabinet Via API
 #     [Documentation]     Bad Case. Should NOT be able to create a new parent 
 #     ...                 cabinet via API if specified label already exists.
 #
@@ -31,7 +31,7 @@ Create Parent Cabinet Via API Successfully
 #
 #     Should Contain    ${resp}    400
 
-Create Parent Cabinet Without Label Via API Should Fail
+Create Parent Cabinet Without Label Via API
     [Documentation]     Bad Case. Should NOT be able to create a new parent 
     ...                 cabinet via API if no label is specified or empty ("")
 
@@ -40,7 +40,8 @@ Create Parent Cabinet Without Label Via API Should Fail
 
     Should Contain    ${resp}    400
 
-Create Child Cabinet Via API Successfully
+
+Create Child Cabinet Via API
     [Documentation]     Good Case. Successfully create a new child cabinet via API
     ...                 with specified parent cabinet id.
 
@@ -56,7 +57,7 @@ Create Child Cabinet Via API Successfully
     Should Be Equal                 ${new_child_cabinet["label"]}         ${new_child_cabinet_label} 
     Should Be Equal                 ${new_child_cabinet["parent_id"]}     ${new_parent_cabinet["id"]}    
 
-Create Duplicate Child Cabinet Via API Should Fail
+Create Duplicate Child Cabinet Via API
     [Documentation]     Bad Case. Should NOT be able to create a new child cabinet 
     ...                 via API with specified parent cabinet id if the child cabinet
     ...                 label already exists.
