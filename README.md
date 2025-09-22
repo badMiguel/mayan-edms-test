@@ -40,6 +40,10 @@
 - /api/v4/cabinets/_cabinet_id_/documents/remove/
     - POST: remove document to cabinet
 
+> [!NOTE]
+> Add cabinet to a parent cabinet by specifying "parent" field when creating.
+> Also possible to add existing cabinet to a parent cabinet.
+
 ### Documents
 
 - /api/v4/documents/
