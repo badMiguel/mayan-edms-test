@@ -67,3 +67,13 @@ Create Duplicate Child Cabinet Via API
     ...         Create Cabinet Via API    ${new_child_cabinet_label}  ${new_parent_cabinet["id"]}
 
     Should Contain     ${resp}  400
+
+Create Child Cabinet Without Label Via API
+    [Documentation]     Bad Case. Should NOT be able to create a new child cabinet 
+    ...                 via API without specifying label field.
+
+    ${resp}=    Run Keyword And Expect Error    HTTPError: 400 Client Error: Bad Request*
+    ...         Create Cabinet Via API    ${EMPTY}  ${new_parent_cabinet["id"]}
+
+    Should Contain     ${resp}  400
+
