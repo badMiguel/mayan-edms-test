@@ -145,42 +145,38 @@ def nuke_database():
     # delete all documents
 
     for i in get_documents():
-        r = requests.delete(
+        requests.delete(
             url=f"{BASE}/api/v4/documents/{i["id"]}",
             headers=headers,
         )
-        r.raise_for_status()
 
     # delete all cabinets
     for i in get_cabinets():
-        r = requests.delete(
+        requests.delete(
             url=f"{BASE}/api/v4/cabinets/{i["id"]}",
             headers=headers,
         )
-        r.raise_for_status()
 
     # delete all metadata
     for i in get_metadata():
-        r = requests.delete(
+        requests.delete(
             url=f"{BASE}/api/v4/metadata_types/{i["id"]}",
             headers=headers,
         )
-        r.raise_for_status()
 
     # delete all tags
     for i in get_tags():
-        r = requests.delete(
+        requests.delete(
             url=f"{BASE}/api/v4/tags/{i["id"]}",
             headers=headers,
         )
-        r.raise_for_status()
 
 
 if __name__ == "__main__":
     headers["Authorization"] = f"Token {get_api_token()}"
 
     # delete everything if things gets crazy
-    nuke_database()
+    # nuke_database()
 
     if len(get_cabinets()) == 0:
         for i in range(5):
