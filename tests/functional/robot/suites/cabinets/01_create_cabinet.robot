@@ -31,6 +31,15 @@ Create Parent Cabinet Via API Successfully
 #
 #     Should Contain    ${resp}    400
 
+Create Parent Cabinet Without Label Via API Should Fail
+    [Documentation]     Bad Case. Should NOT be able to create a new parent 
+    ...                 cabinet via API if no label is specified or empty ("")
+
+    ${resp}=    Run Keyword And Expect Error    HTTPError: 400 Client Error: Bad Request*
+    ...         Create Cabinet Via API    ${EMPTY}
+
+    Should Contain    ${resp}    400
+
 Create Child Cabinet Via API Successfully
     [Documentation]     Good Case. Successfully create a new child cabinet via API
     ...                 with specified parent cabinet id.
