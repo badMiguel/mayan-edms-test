@@ -8,7 +8,7 @@ import psycopg2
 
 BASE = "http://localhost:8081"
 USERNAME = "admin"
-PASSWORD = "jQ4AfQX2Ga"
+PASSWORD = "YPE7E8zv8z"
 DIR = os.getcwd()
 headers = {"Content-Type": "application/json"}
 
@@ -153,7 +153,7 @@ def truncate_table(table_name):
     )
 
     cursor = connection.cursor()
-    cursor.execute(f"TRUNCATE TABLE {table_name} RESTART IDENTITY CASCADE;")
+    cursor.execute(f"TRUNCATE TABLE {table_name} CASCADE;")
     connection.commit()
     if connection and cursor:
         cursor.close()

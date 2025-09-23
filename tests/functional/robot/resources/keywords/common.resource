@@ -7,7 +7,7 @@ Library     RequestsLibrary
 Library     DatabaseLibrary
 Library     Collections
 Library     String
-Library    SeleniumLibrary
+Library     SeleniumLibrary
 
 
 *** Keywords ***
@@ -22,7 +22,7 @@ Get Headers
     ...                     api
     ...                     url=/api/v4/auth/token/obtain/?format=json
     ...                     headers=${content_type}
-    ...                     data={"username": "admin", "password": "jQ4AfQX2Ga"}
+    ...                     data={"username": "${USERNAME}", "password": "${PASSWORD}"}
 
     ${token}=               Get From Dictionary     ${resp.json()}      token
     ${new_headers}=         Create Dictionary       
