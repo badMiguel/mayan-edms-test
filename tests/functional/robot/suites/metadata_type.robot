@@ -25,26 +25,68 @@ Create Valid Metadata Type Via API
     Should Be Equal                 ${new_metadata_type["label"]}       ${new_metadata_type_label}
     Should Be Equal                 ${new_metadata_type["name"]}        ${new_metadata_type_name}
     
-    # Wait For Cabinet By ID To Exist In DB    ${new_metadata_type["id"]}
-    # Validate Cabinet In DB Via ID    ${new_metadata_type["id"]}    ${new_metadata_type["label"]}
+    Wait For Metadata Type By ID To Exist In DB    ${new_metadata_type["id"]}
+    Validate Metadata Type In DB Via ID    ${new_metadata_type["id"]}     ${new_metadata_type_label}     ${new_metadata_type_name}
 
 Create Metadata Type Without Label And Name Via API
-    No Operation
+    [Documentation]     Bad Case. Should NOT be able to create a new metadata 
+    ...                 type via API if no label and name is specified 
+
+    ${resp}=    Run Keyword And Expect Error    HTTPError: 400 Client Error: Bad Request*
+    ...         Create Metadata Type Via API    ${EMPTY}    ${EMPTY}
+
+    Should Contain    ${resp}    400
 
 Create Metadata Type Without Label Via API
-    No Operation
+    [Documentation]     Bad Case. Should NOT be able to create a new metadata 
+    ...                 type via API if no label is specified 
+
+    ${new_name}=   Create Unique String    Metadata_Type_Name
+    ${resp}=    Run Keyword And Expect Error    HTTPError: 400 Client Error: Bad Request*
+    ...         Create Metadata Type Via API    ${EMPTY}    ${new_name}
+
+    Should Contain    ${resp}    400
 
 Create Metadata Type Without Name Via API
-    No Operation
+    [Documentation]     Bad Case. Should NOT be able to create a new metadata 
+    ...                 type via API if no name is specified 
 
-Create Duplicate Metadata Type Via API
-    No Operation
+    ${new_label}=   Create Unique String    Metadata_Type_Label
+    ${resp}=    Run Keyword And Expect Error    HTTPError: 400 Client Error: Bad Request*
+    ...         Create Metadata Type Via API    ${new_label}    ${EMPTY}
+
+    Should Contain    ${resp}    400
+
+Create Metadata Type With Existing Name Via API
+    [Documentation]     Bad Case. Should NOT be able to create a new metadata
+    ...                 type via API if specified NAME already exists. 
+
+    ${new_label}=   Create Unique String        Metadata_Type_Label
+    ${resp}=    Run Keyword And Expect Error    HTTPError: 400 Client Error: Bad Request*
+    ...         Create Metadata Type Via API    ${new_metadata_type_label}      ${new_metadata_type_name}  
+
+    Should Contain    ${resp}    400
 
 Create Metadata Type With Long Label Via API
-    No Operation
+    [Documentation]     Bad Case. Should NOT be able to create a new metadata type via
+    ...                 API if label is greater than 48 characters.
+
+    ${new_label_1}=     Create Very Long String         49
+    ${new_name}=        Create Unique String            Metadata_Type_Name
+    ${resp}=            Run Keyword And Expect Error    HTTPError: 400 Client Error: Bad Request*
+    ...                 Create Metadata Type Via API    ${new_label_1}    ${new_name}
+
+    Should Contain     ${resp}  400
+
+    ${new_label_2}=     Create Very Long String         48
+    ${new_name}=        Create Unique String            Metadata_Type_Label
+    ${resp}=            Create Metadata Type Via API    ${new_label_2}    ${new_name}
+
+    Should Be Equal As Integers     ${resp.status_code}    201
 
 Create Metadata Type With Long Name Via API
-    No Operation
+    [Documentation]     Bad Case. Should NOT be able to create a new metadata type via
+    ...                 API if name is greater than 48 characters.
 
 Create Metadata Type Via UI
     No Operation
