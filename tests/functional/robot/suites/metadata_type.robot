@@ -11,9 +11,9 @@ Create Valid Metadata Type Via API
     [Documentation]     Good Case. Successfully create a new metadata type via
     ...                 API.
 
-    ${new_metadata_type_label}=    Create Unique Label     Metadata_Type_Label
+    ${new_metadata_type_label}=    Create Unique String     Metadata_Type_Label
     Set Global Variable            ${new_metadata_type_label}
-    ${new_metadata_type_name}=     Create Unique Label     Metadata_Type_Name
+    ${new_metadata_type_name}=     Create Unique String     Metadata_Type_Name
     Set Global Variable            ${new_metadata_type_name}
 
     ${resp}=                    Create Metadata Type Via API          ${new_metadata_type_label}    ${new_metadata_type_name}

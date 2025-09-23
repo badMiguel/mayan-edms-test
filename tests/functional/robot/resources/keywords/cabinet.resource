@@ -24,7 +24,7 @@ Create Cabinet Via UI
     [Documentation]     Create a cabinet using the UI
 
     Open Browser    ${BASE_URL}/cabinets/cabinets/create    ${BROWSER}
-    ${new_label}=   Create Unique Label                     Robot_Cabinet_UI
+    ${new_label}=   Create Unique String                    Robot_Cabinet_UI
     Input Text      id=id_label                             ${new_label}
     Click Button    name=submit
 

@@ -11,7 +11,7 @@ Create Parent Cabinet Via API
     [Documentation]     Good Case. Successfully create a new parent cabinet via
     ...                 API (no parent field specified).
 
-    ${new_parent_cabinet_label}=    Create Unique Label     Robot_Cabinet
+    ${new_parent_cabinet_label}=    Create Unique String     Robot_Cabinet
     Set Global Variable             ${new_parent_cabinet_label}
 
     ${resp}=                    Create Cabinet Via API  ${new_parent_cabinet_label}  
@@ -49,7 +49,7 @@ Create Child Cabinet Via API
     [Documentation]     Good Case. Successfully create a new child cabinet via API
     ...                 with specified parent cabinet id.
 
-    ${new_child_cabinet_label}=     Create Unique Label         Robot_Cabinet
+    ${new_child_cabinet_label}=     Create Unique String         Robot_Cabinet
     Set Global Variable             ${new_child_cabinet_label}
 
     ${resp}=                Create Cabinet Via API      ${new_child_cabinet_label}      ${new_parent_cabinet["id"]}
@@ -89,7 +89,7 @@ Create Child Cabinet Without Parent Via API
     ...                 a new parent cabinet.
 
 
-    ${new_label}=   Create Unique Label         Robot_Cabinet
+    ${new_label}=   Create Unique String        Robot_Cabinet
     ${resp}=        Create Cabinet Via API      ${new_label}    ${EMPTY}
     ${new_cabinet}  Set Variable                ${resp.json()}
 
@@ -104,7 +104,7 @@ Create Child Cabinet With Invalid Parent Via API
     ...                 via API if parent cabinet does not exist from the specified
     ...                 parent ID.
 
-    ${new_label}=   Create Unique Label         Robot_Cabinet
+    ${new_label}=   Create Unique String        Robot_Cabinet
     ${resp}=    Run Keyword And Expect Error    HTTPError: 400 Client Error: Bad Request*
     ...         Create Cabinet Via API          ${new_label}    0 
 
@@ -114,13 +114,13 @@ Create Cabinet With Very Long Label Via API
     [Documentation]     Bad Case. Should NOT be able to create a new cabinet via
     ...                 API if label is greater than 128 characters.
 
-    ${new_label}=   Create Very Long Label          129
+    ${new_label}=   Create Very Long String         129
     ${resp}=        Run Keyword And Expect Error    HTTPError: 400 Client Error: Bad Request*
     ...             Create Cabinet Via API          ${new_label}    
 
     Should Contain     ${resp}  400
 
-    ${new_label}=   Create Very Long Label          128
+    ${new_label}=   Create Very Long String         128
     ${resp}=        Create Cabinet Via API          ${new_label}    
 
     Should Be Equal As Integers     ${resp.status_code}    201
@@ -129,7 +129,7 @@ Create Parent Cabinet Via UI
     [Documentation]     Good Case. Create a cabinet using the UI
 
     Go To           ${BASE_URL}/cabinets/cabinets/create/
-    ${new_label}=   Create Unique Label     Robot_Cabinet_UI
+    ${new_label}=   Create Unique String     Robot_Cabinet_UI
     Wait Until Element Is Visible    id=id_label    15s
     Input Text      id=id_label     ${new_label}
     Click Button    name=submit
@@ -165,7 +165,7 @@ Create Child Cabinet Via UI
     [Documentation]     Good Case. Create a child cabinet using the UI
 
     Go To           ${BASE_URL}/cabinets/cabinets/${new_parent_cabinet["id"]}/children/add/
-    ${new_label}=   Create Unique Label     Robot_Cabinet_UI
+    ${new_label}=   Create Unique String     Robot_Cabinet_UI
     Wait Until Element Is Visible    id=id_label    15s
     Input Text      id=id_label     ${new_label}
     Click Button    name=submit

@@ -31,14 +31,14 @@ Get Headers
     Set Global Variable     ${HEADERS}      ${new_headers}
     Set Global Variable     ${AUTH_TOKEN}   ${token}
 
-Create Unique Label
+Create Unique String
     [Documentation]     Generate a unique label
     [Arguments]         ${prefix}
     ${time}=            Evaluate    int(time.time())    modules=time
     ${label}=           Catenate    SEPARATOR=_     ${prefix}   ${time}
     RETURN              ${label}
 
-Create Very Long Label
+Create Very Long String
     [Documentation]     Generate a label with character length 1000.
     [Arguments]         ${length}=1000  
     ${long_string}      Generate Random String      ${length}
