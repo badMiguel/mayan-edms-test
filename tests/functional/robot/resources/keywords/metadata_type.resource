@@ -28,8 +28,6 @@ Create Metadata Type Via UI
     Wait Until Element Is Visible    id=id_name     15s
     Wait Until Element Is Visible    id=id_label    15s
 
-    ${new_name}=    Create Unique String    Robot_Metadata_Type_Name_UI
-    ${new_label}=   Create Unique String    Robot_Metadata_Type_Label_UI
     Input Text      id=id_name              ${new_name}
     Input Text      id=id_label             ${new_label}
     Click Button    name=submit
