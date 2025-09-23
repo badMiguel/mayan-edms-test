@@ -173,3 +173,25 @@ Create Child Cabinet Via UI
 
     Wait For Cabinet By Label To Exist In DB    ${new_label}
     Validate Cabinet In DB Via Label    ${new_label}    ${new_parent_cabinet["id"]}
+
+Create Duplicate Child Cabinet Via UI
+    [Documentation]     Bad Case. Should NOT be able to create a new child cabinet via
+    ...                 UI with existing label
+
+    Go To           ${BASE_URL}/cabinets/cabinets/${new_parent_cabinet["id"]}/children/add/
+    Wait Until Element Is Visible    id=id_label    15s
+    Input Text      id=id_label     ${new_child_cabinet_label}
+    Click Button    name=submit
+    Wait Until Page Contains    Cabinet with this Parent and Label already exists.    10s
+
+Create Child Cabinet Without Label Via UI
+    [Documentation]     Bad Case. Should NOT be able to create a new child cabinet via
+    ...                 UI without label
+
+    Go To           ${BASE_URL}/cabinets/cabinets/${new_parent_cabinet["id"]}/children/add/
+    Wait Until Element Is Visible    id=id_label    15s
+    Input Text      id=id_label     ${EMPTY}
+    Click Button    name=submit
+
+    ${is_valid}=    Execute Javascript    return document.getElementById('id_label').checkValidity();
+    Should Not Be True        ${is_valid}
