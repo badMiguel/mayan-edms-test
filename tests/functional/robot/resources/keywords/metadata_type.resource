@@ -25,8 +25,10 @@ Create Metadata Type Via UI
 
     Go To   ${BASE_URL}/metadata/metadata_types/create/
 
-    Wait Until Element Is Visible    id=id_name     15s
-    Wait Until Element Is Visible    id=id_label    15s
+    Wait Until Element Is Visible   id=id_name      15s
+    Wait Until Element Is Visible   id=id_label     15s
+    Scroll Element Into View        name=submit 
+    Wait Until Element Is Visible   name=submit     15s
 
     Input Text      id=id_name              ${new_name}
     Input Text      id=id_label             ${new_label}
