@@ -125,7 +125,7 @@ Create Cabinet With Very Long Label Via API
 
     Should Be Equal As Integers     ${resp.status_code}    201
 
-Create Cabinet Via UI
+Create Parent Cabinet Via UI
     [Documentation]     Good Case. Create a cabinet using the UI
 
     Go To           ${BASE_URL}/cabinets/cabinets/create/
@@ -138,7 +138,7 @@ Create Cabinet Via UI
 
     Wait For Cabinet By Label To Exist In DB    ${new_label}
 
-Create Duplicate Cabinet Via UI
+Create Duplicate Parent Cabinet Via UI
     [Documentation]     Bad Case. Should NOT be able to create a new cabinet via
     ...                 UI with existing label
 
@@ -148,7 +148,7 @@ Create Duplicate Cabinet Via UI
     Click Button    name=submit
     Wait Until Page Contains    Cabinet with this Parent and Label already exists.    10s
 
-Create Cabinet Without Label Via UI
+Create Parent Cabinet Without Label Via UI
     [Documentation]     Bad Case. Should NOT be able to create a new cabinet via
     ...                 UI without label
 
