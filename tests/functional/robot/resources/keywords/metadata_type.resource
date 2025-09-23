@@ -20,11 +20,18 @@ Create Metadata Type Via API
     RETURN      ${resp}
 
 Create Metadata Type Via UI
-    [Documentation]     Create a cabinet using the UI
+    [Documentation]     Create a metadata type using the UI
+    [Arguments]         ${new_label}    ${new_name}   
 
-    Open Browser    ${BASE_URL}/cabinets/cabinets/create    ${BROWSER}
-    ${new_label}=   Create Unique String                    Robot_Metadata_Type_UI
-    Input Text      id=id_label                             ${new_label}
+    Go To   ${BASE_URL}/metadata/metadata_types/create/
+
+    Wait Until Element Is Visible    id=id_name     15s
+    Wait Until Element Is Visible    id=id_label    15s
+
+    ${new_name}=    Create Unique String    Robot_Metadata_Type_Name_UI
+    ${new_label}=   Create Unique String    Robot_Metadata_Type_Label_UI
+    Input Text      id=id_name              ${new_name}
+    Input Text      id=id_label             ${new_label}
     Click Button    name=submit
 
 Get Metadata Type By ID
@@ -59,11 +66,7 @@ Validate Metadata Type In DB Via ID
     # row = [id, label, name]
     ${row}=     Set Variable    ${rows}[0]
     Should Be Equal    ${row[1]}    ${expected_label}
-    IF    '${expected_name}' == '${None}'
-        Should Be Equal     ${row[2]}    ${None}
-    ELSE
-        Should Be Equal     ${row[2]}    ${expected_name}
-    END
+    Should Be Equal     ${row[2]}    ${expected_name}
 
 Get Metadata Type By Label
     [Documentation]     Get metadata type using metadata type ID via database query.
@@ -97,10 +100,6 @@ Validate Metadata Type In DB Via Label
     # row = [id, label, name]
     ${row}=     Set Variable    ${rows}[0]
     Should Not Be Empty    ${row}
-    IF    '${expected_name}' == '${None}'
-        Should Be Equal    ${row[2]}    ${None}
-    ELSE
-        Should Be Equal As Integers    ${row[2]}    ${expected_name}
-    END
+    Should Be Equal     ${row[2]}    ${expected_name}
 
 
