@@ -24,7 +24,7 @@ Create Parent Cabinet Via API
     Should Be Equal                 ${new_parent_cabinet["parent"]}     ${null}
     
     Wait For Cabinet By ID To Exist In DB    ${new_parent_cabinet["id"]}
-    Validate Cabinet In DB    ${new_parent_cabinet["id"]}    ${new_parent_cabinet["label"]}
+    Validate Cabinet In DB Via ID    ${new_parent_cabinet["id"]}    ${new_parent_cabinet["label"]}
 
 # Create Duplicate Parent Cabinet Via API
 #     [Documentation]     Bad Case. Should NOT be able to create a new parent 
@@ -62,7 +62,7 @@ Create Child Cabinet Via API
     Should Be Equal                 ${new_child_cabinet["parent_id"]}     ${new_parent_cabinet["id"]}    
 
     Wait For Cabinet By ID To Exist In DB    ${new_parent_cabinet["id"]}
-    Validate Cabinet In DB    ${new_parent_cabinet["id"]}    ${new_parent_cabinet["label"]}
+    Validate Cabinet In DB Via ID   ${new_parent_cabinet["id"]}    ${new_parent_cabinet["label"]}
 
 Create Duplicate Child Cabinet Via API
     [Documentation]     Bad Case. Should NOT be able to create a new child cabinet 
@@ -126,7 +126,7 @@ Create Cabinet With Very Long Label Via API
     Should Be Equal As Integers     ${resp.status_code}    201
 
 Create Cabinet Via UI
-    [Documentation]     Create a cabinet using the UI
+    [Documentation]     Good Case. Create a cabinet using the UI
 
     Go To           ${BASE_URL}/cabinets/cabinets/create/
     ${new_label}=   Create Unique Label     Robot_Cabinet_UI
@@ -135,3 +135,27 @@ Create Cabinet Via UI
     Click Button    name=submit
     Wait Until Page Contains    Cabinet created successfully    10s
     Wait Until Page Contains    ${new_label}                    10s
+
+    Wait For Cabinet By Label To Exist In DB    ${new_label}
+
+Create Duplicate Cabinet Via UI
+    [Documentation]     Bad Case. Should NOT be able to create a new cabinet via
+    ...                 UI with existing label
+
+    Go To           ${BASE_URL}/cabinets/cabinets/create/
+    Wait Until Element Is Visible    id=id_label    15s
+    Input Text      id=id_label     ${new_child_cabinet_label}
+    Click Button    name=submit
+    Wait Until Page Contains    Cabinet with this Parent and Label already exists.    10s
+
+Create Cabinet Without Label Via UI
+    [Documentation]     Bad Case. Should NOT be able to create a new cabinet via
+    ...                 UI without label
+
+    Go To           ${BASE_URL}/cabinets/cabinets/create/
+    Wait Until Element Is Visible    id=id_label    15s
+    Input Text      id=id_label     ${EMPTY}
+    Click Button    name=submit
+
+    ${is_valid}=    Execute Javascript    return document.getElementById('id_label').checkValidity();
+    Should Not Be True        ${is_valid}
