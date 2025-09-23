@@ -88,23 +88,69 @@ Create Metadata Type With Long Name Via API
     [Documentation]     Bad Case. Should NOT be able to create a new metadata type via
     ...                 API if name is greater than 48 characters.
 
-Create Metadata Type Via UI
-    No Operation
+    ${new_name_1}=      Create Very Long String         49
+    ${new_label}=       Create Unique String            Metadata_Type_Name
+    ${resp}=            Run Keyword And Expect Error    HTTPError: 400 Client Error: Bad Request*
+    ...                 Create Metadata Type Via API    ${new_label}    ${new_name_1}
+
+    Should Contain      ${resp}  400
+
+    ${new_name_2}=      Create Very Long String         48
+    ${new_label}=       Create Unique String            Metadata_Type_Label
+    ${resp}=            Create Metadata Type Via API    ${new_label}    ${new_name_2}
+
+    Should Be Equal As Integers     ${resp.status_code}    201
+
+Create Valid Metadata Type Via UI
+    [Documentation]     Good Case. Create a metadata using the UI
+
+    # Sleep a bit to avoid having same label generated from the previous test
+    # `Create Metadata Type With Long Name Via API`
+    Sleep    1s
+
+    ${new_label}=   Create Unique String    Metadata_Type_Label
+    ${new_name}=    Create Unique String    Metadata_Type_Name
+
+    Create Metadata Type Via UI   ${new_label}  ${new_name}
+
+    Wait Until Page Contains    Metadata type created successfully      10s
+    Wait Until Page Contains    ${new_label}                            10s
+
+    Wait For Metadata Type By Label To Exist In DB    ${new_label}
+    Validate Metadata Type In DB Via Label            ${new_label}      ${new_name}
 
 Create Metadata Type Without Label And Name Via UI
-    No Operation
+    [Documentation]     Bad Case. Should NOT be able to create a new metadata type via
+    ...                 UI without label and name.
+
+    Create Metadata Type Via UI     ${EMPTY}    ${EMPTY}
+    ${is_valid}=    Execute Javascript    return document.getElementById('id_label').checkValidity();
+    Should Not Be True        ${is_valid}
+    ${is_valid}=    Execute Javascript    return document.getElementById('id_name').checkValidity();
+    Should Not Be True        ${is_valid}
 
 Create Metadata Type Without Label Via UI
-    No Operation
+    [Documentation]     Bad Case. Should NOT be able to create a new metadata type via
+    ...                 UI without label.
+
+    ${new_name}=    Create Unique String    Metadata_Type_Name
+    Create Metadata Type Via UI     ${EMPTY}    ${new_name}
+    ${is_valid}=    Execute Javascript    return document.getElementById('id_label').checkValidity();
+    Should Not Be True        ${is_valid}
 
 Create Metadata Type Without Name Via UI
-    No Operation
+    [Documentation]     Bad Case. Should NOT be able to create a new metadata type via
+    ...                 UI without name.
+
+    ${new_label}=    Create Unique String    Metadata_Type_Label
+    Create Metadata Type Via UI     ${new_label}    ${EMPTY}
+    ${is_valid}=    Execute Javascript    return document.getElementById('id_name').checkValidity();
+    Should Not Be True        ${is_valid}
 
 Create Duplicate Metadata Type Via UI
-    No Operation
+    [Documentation]     Bad Case. Should NOT be able to create a new metadata type via
+    ...                 UI with existing name
 
-Create Metadata Type With Long Label Via UI
-    No Operation
-
-Create Metadata Type With Long Name Via UI
-    No Operation
+    ${new_label}=   Create Unique String    Metadata_Type_Label
+    Create Metadata Type Via UI     ${new_label}    ${new_metadata_type_name}
+    Wait Until Page Contains        Metadata type with this Name already exists.    10s
