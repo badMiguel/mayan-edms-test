@@ -27,3 +27,42 @@ Create Valid Metadata Type Via API
     
     # Wait For Cabinet By ID To Exist In DB    ${new_metadata_type["id"]}
     # Validate Cabinet In DB Via ID    ${new_metadata_type["id"]}    ${new_metadata_type["label"]}
+
+Create Metadata Type Without Label And Name Via API
+    No Operation
+
+Create Metadata Type Without Label Via API
+    No Operation
+
+Create Metadata Type Without Name Via API
+    No Operation
+
+Create Duplicate Metadata Type Via API
+    No Operation
+
+Create Metadata Type With Long Label Via API
+    No Operation
+
+Create Metadata Type With Long Name Via API
+    No Operation
+
+Create Metadata Type Via UI
+    No Operation
+
+Create Metadata Type Without Label And Name Via UI
+    No Operation
+
+Create Metadata Type Without Label Via UI
+    No Operation
+
+Create Metadata Type Without Name Via UI
+    No Operation
+
+Create Duplicate Metadata Type Via UI
+    No Operation
+
+Create Metadata Type With Long Label Via UI
+    No Operation
+
+Create Metadata Type With Long Name Via UI
+    No Operation
