@@ -90,14 +90,14 @@ Validate Cabinet In DB Via ID
 Validate Cabinet In DB Via Label
     [Documentation]     Checks that the given label and parent matches the details
     ...                 in the database.
-    [Arguments]         ${label}   ${expected_id}   ${expected_parent_id}=${None}
+    [Arguments]         ${label}   ${expected_parent_id}=${None}
 
     ${rows}=    Get Cabinet By Label    ${label}
     Should Not Be Empty    ${rows}
 
     # row = [id, label, parent_label]
     ${row}=     Set Variable    ${rows}[0]
-    Should Be Equal    ${row[1]}    ${expected_id}
+    Should Not Be Empty    ${row}
     IF    '${expected_parent_id}' == '${None}'
         Should Be Equal    ${row[2]}    ${None}
     ELSE

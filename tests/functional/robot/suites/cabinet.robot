@@ -137,6 +137,7 @@ Create Parent Cabinet Via UI
     Wait Until Page Contains    ${new_label}                    10s
 
     Wait For Cabinet By Label To Exist In DB    ${new_label}
+    Validate Cabinet In DB Via Label    ${new_label}
 
 Create Duplicate Parent Cabinet Via UI
     [Documentation]     Bad Case. Should NOT be able to create a new cabinet via
@@ -159,3 +160,16 @@ Create Parent Cabinet Without Label Via UI
 
     ${is_valid}=    Execute Javascript    return document.getElementById('id_label').checkValidity();
     Should Not Be True        ${is_valid}
+
+Create Child Cabinet Via UI
+    [Documentation]     Good Case. Create a child cabinet using the UI
+
+    Go To           ${BASE_URL}/cabinets/cabinets/${new_parent_cabinet["id"]}/children/add/
+    ${new_label}=   Create Unique Label     Robot_Cabinet_UI
+    Wait Until Element Is Visible    id=id_label    15s
+    Input Text      id=id_label     ${new_label}
+    Click Button    name=submit
+    Wait Until Page Contains    Cabinet created successfully    10s
+
+    Wait For Cabinet By Label To Exist In DB    ${new_label}
+    Validate Cabinet In DB Via Label    ${new_label}    ${new_parent_cabinet["id"]}
