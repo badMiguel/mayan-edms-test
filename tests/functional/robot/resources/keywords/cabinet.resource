@@ -20,12 +20,22 @@ Create Cabinet Via API
     Log         Created cabinet ${json['id']} - ${json['label']}
     RETURN      ${resp}
 
-Create Cabinet Via UI
+Create Parent Cabinet Via UI
     [Documentation]     Create a cabinet using the UI
+    [Arguments]         ${new_label}
 
-    Open Browser    ${BASE_URL}/cabinets/cabinets/create    ${BROWSER}
-    ${new_label}=   Create Unique String                    Robot_Cabinet_UI
-    Input Text      id=id_label                             ${new_label}
+    Go To           ${BASE_URL}/cabinets/cabinets/create/
+    Wait Until Element Is Visible    id=id_label    15s
+    Input Text      id=id_label     ${new_label}
+    Click Button    name=submit
+
+Create Child Cabinet Via UI
+    [Documentation]     Create a cabinet using the UI
+    [Arguments]         ${new_label}    ${parent_id}   
+
+    Go To           ${BASE_URL}/cabinets/cabinets/${parent_id}/children/add/
+    Wait Until Element Is Visible    id=id_label    15s
+    Input Text      id=id_label     ${new_label}
     Click Button    name=submit
 
 Get Cabinet By ID
