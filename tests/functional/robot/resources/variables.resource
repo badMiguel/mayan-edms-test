@@ -7,6 +7,9 @@ ${BROWSER}      Chrome
 ${USERNAME}     admin
 ${PASSWORD}     YCFERznVuj
 
+${FILE_PATH}    ${CURDIR}/../data/TestFile.pdf
+${FILENAME}     TestFile.pdf
+
 # postgre 
 ${DBMODULE}     psycopg2
 ${DBNAME}       mayan
