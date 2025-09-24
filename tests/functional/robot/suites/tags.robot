@@ -1,5 +1,5 @@
 *** Settings ***
-Documentation   Tests create metadata functionality
+Documentation   Tests create tag functionality
 
 Resource    ../resources/variables.resource
 Resource    ../resources/keywords/common.resource
@@ -37,8 +37,8 @@ Create Tag Without Label And Color Via API
     Should Contain    ${resp}    400
 
 Create Tag Without Label Via API
-    [Documentation]     Bad Case. Should NOT be able to create a new metadata 
-    ...                 type via API if no label is specified 
+    [Documentation]     Bad Case. Should NOT be able to create a new tag
+    ...                 via API if no label is specified 
 
     ${new_color}=   Create String Length            7
     ${resp}=        Run Keyword And Expect Error    HTTPError: 400 Client Error: Bad Request*
@@ -125,7 +125,7 @@ Create Tag Without Label Via UI
     Should Not Be True      ${is_valid}
 
 Create Duplicate Tag Via UI
-    [Documentation]     Bad Case. Should NOT be able to create a new metadata type via
+    [Documentation]     Bad Case. Should NOT be able to create a new tag via
     ...                 UI with existing name
 
     Create Tag Via UI               ${new_tag_label}

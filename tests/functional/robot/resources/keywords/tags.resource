@@ -8,7 +8,7 @@ Resource        common.resource
 
 *** Keywords ***
 Create Tag Via API
-    [Documentation]     Create a tag type through POST request on API path 
+    [Documentation]     Create a tag through POST request on API path 
     ...                 /api/v4/tags/. 
     [Arguments]         ${label}    ${color}
 
@@ -20,7 +20,7 @@ Create Tag Via API
     RETURN      ${resp}
 
 Create Tag Via UI
-    [Documentation]     Create a tag type using the UI
+    [Documentation]     Create a tag using the UI
     [Arguments]         ${new_label}    
 
     Go To   ${BASE_URL}/tags/tags/create/
@@ -66,7 +66,7 @@ Validate Tag In DB Via ID
     Should Be Equal     ${row[2]}    ${expected_color}
 
 Get Tag By Label
-    [Documentation]     Get tag type using tag type ID via database query.
+    [Documentation]     Get tag using tag ID via database query.
     [Arguments]         ${label}
     ${rows}=            Query   
     ...                 SELECT id,label,color FROM tags_tag WHERE label = '${label}'
@@ -80,7 +80,7 @@ Tag Should Exist In DB By Label
     Should Not Be Empty     ${rows} Tag with label ${label} not found
 
 Wait For Tag By Label To Exist In DB
-    [Documentation]     Waits until given tag type exists in the database.
+    [Documentation]     Waits until given tag exists in the database.
     [Arguments]         ${label}   ${timeout}=10s      ${interval}=1s
 
     Wait Until Keyword Succeeds     ${timeout}   ${interval}
