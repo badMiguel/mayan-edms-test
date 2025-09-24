@@ -139,7 +139,25 @@ Add Non-existing Metadata To Document Via API
     ...         Add Metadata To Document Via API    0   ${new_document_stub["id"]}
 
 Add Existing Tag To Document Via API
-    No Operation
+    [Documentation]     Good case. Attach existing tag to existing document.
+
+    ${rows}=    Get Tag By Label    Seed Tag 1
+    ${tag_id}=    Set Variable    ${rows[0][0]}
+    Set Global Variable    ${tag_id}
+
+    ${resp}=    Add Tag To Document Via API    ${tag_id}    ${new_document_stub["id"]}
+    
+    Should Be Equal As Integers     ${resp.status_code}     200
+
+    Wait For Tag Document To Exist In DB       ${tag_id}
+    Validate Tag Added To Document    ${tag_id}     ${new_document_stub["id"]}
+
+Add Non-existing Tag To Document Via API
+    [Documentation]     Bad case. Should not be able to attach tag if tag does
+    ...                 not exist in the database.
+
+    ${resp}=    Run Keyword And Expect Error    HTTPError: 400 Client Error: Bad Request*
+    ...         Add Tag To Document Via API    0   ${new_document_stub["id"]}
 
 Create Valid Document Via UI
     No Operation

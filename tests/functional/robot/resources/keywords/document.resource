@@ -217,3 +217,40 @@ Add Tag To Document Via API
     ...         headers=${HEADERS}
 
     RETURN      ${resp}
+
+Get Tag Document By ID
+    [Documentation]     Get id of tags_tag_documents using tag ID
+    [Arguments]         ${tag_id}
+    ${rows}=            Query   
+    ...                 SELECT id,document_id,tag_id FROM tags_tag_documents WHERE tag_id = ${tag_id}
+    RETURN              ${rows}
+
+Tag Document Should Exist In DB
+    [Documentation]         Checks that `Get Tag Document By Id` keyword does not return 
+    ...                     an empty list [].
+    [Arguments]             ${id}
+    ${rows}=                Get Tag Document By ID  ${id}
+    Should Not Be Empty     ${rows}
+
+Wait For Tag Document To Exist In DB
+    [Documentation]     Waits until given document exists in the database.
+    [Arguments]         ${id}       ${timeout}=30s      ${interval}=1s
+
+    Wait Until Keyword Succeeds     ${timeout}   ${interval}
+    ...                             Tag Document Should Exist In DB     ${id}
+
+Validate Tag Added To Document
+    [Documentation]     Checks that the given tag exists in the document in
+    ...                 the database.
+    [Arguments]         ${tag_id}     ${documnet_id}
+
+    ${rows}=                Get Tag Document By ID     ${tag_id}
+    Should Not Be Empty     ${rows}
+
+    ${matches}=    Evaluate    [r for r in ${rows} if r[1] == ${documnet_id}]
+    Length Should Be    ${matches}    1
+
+    # row = [id, document_id, tag_id]
+    ${row}=                 Set Variable    ${matches}[0]
+    Should Not Be Empty     ${row}
+    Should Be Equal         ${row[1]}       ${documnet_id}
