@@ -107,8 +107,11 @@ Upload File With Long Filename
 #     No Operation
 
 Add Existing Metadata To Document Via API
+    [Documentation]     Good case. Attach existing metadata to existing document.
+
     ${rows}=    Get Metadata Type By Label    Seed Metadata 1
     ${metadata_type_id}=    Set Variable    ${rows[0][0]}
+    Set Global Variable    ${metadata_type_id}
 
     ${resp}=    Add Metadata To Document Via API    ${metadata_type_id}    ${new_document_stub["id"]}
     ${metadata_document}=   Set Variable    ${resp.json()["metadata_type"]}
@@ -122,10 +125,18 @@ Add Existing Metadata To Document Via API
     Validate Metadata Added To Document    ${metadata_document["id"]}     ${new_document_stub["id"]}
 
 Add Duplicate Metadata To Document Via API
-    No Operation
+    [Documentation]     Bad Case. Should NOT be able to add the same metatag to
+    ...                 the same document.
+
+    ${resp}=    Run Keyword And Expect Error    HTTPError: 400 Client Error: Bad Request*
+    ...         Add Metadata To Document Via API    ${metadata_type_id}    ${new_document_stub["id"]}
 
 Add Non-existing Metadata To Document Via API
-    No Operation
+    [Documentation]     Bad Case. Should NOT be able to add non-existing metadata
+    ...                 to a document.
+
+    ${resp}=    Run Keyword And Expect Error    HTTPError: 400 Client Error: Bad Request*
+    ...         Add Metadata To Document Via API    0   ${new_document_stub["id"]}
 
 Add Existing Tag To Document Via API
     No Operation
