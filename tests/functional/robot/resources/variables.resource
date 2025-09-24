@@ -5,7 +5,7 @@ Documentation   Stores constant variables
 ${BASE_URL}     http://localhost:8081
 ${BROWSER}      Chrome
 ${USERNAME}     admin
-${PASSWORD}     YPE7E8zv8z
+${PASSWORD}     YCFERznVuj
 
 # postgre 
 ${DBMODULE}     psycopg2
