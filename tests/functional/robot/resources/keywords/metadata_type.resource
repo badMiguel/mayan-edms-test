@@ -46,7 +46,7 @@ Metadata Type Should Exist In DB By ID
     ...                     an empty list [].
     [Arguments]             ${id}
     ${rows}=                Get Metadata Type By ID    ${id}
-    Should Not Be Empty     ${rows} Metadata Type with id ${id} not found
+    Should Not Be Empty     ${rows}
 
 Wait For Metadata Type By ID To Exist In DB
     [Documentation]     Waits until given metadata type exists in the database.
@@ -80,7 +80,7 @@ Metadata Type Should Exist In DB By Label
     ...                     an empty list [].
     [Arguments]             ${label}
     ${rows}=                Get Metadata Type By Label    ${label}
-    Should Not Be Empty     ${rows} Metadata Type with label ${label} not found
+    Should Not Be Empty     ${rows}
 
 Wait For Metadata Type By Label To Exist In DB
     [Documentation]     Waits until given metadata type exists in the database.

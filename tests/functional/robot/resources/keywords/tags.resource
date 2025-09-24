@@ -43,7 +43,7 @@ Tag Should Exist In DB By ID
     ...                     an empty list [].
     [Arguments]             ${id}
     ${rows}=                Get Tag By ID    ${id}
-    Should Not Be Empty     ${rows} Tag with id ${id} not found
+    Should Not Be Empty     ${rows}
 
 Wait For Tag By ID To Exist In DB
     [Documentation]     Waits until given tag exists in the database.
@@ -77,7 +77,7 @@ Tag Should Exist In DB By Label
     ...                     an empty list [].
     [Arguments]             ${label}
     ${rows}=                Get Tag By Label    ${label}
-    Should Not Be Empty     ${rows} Tag with label ${label} not found
+    Should Not Be Empty     ${rows}
 
 Wait For Tag By Label To Exist In DB
     [Documentation]     Waits until given tag exists in the database.
