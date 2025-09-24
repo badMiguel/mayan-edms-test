@@ -106,3 +106,35 @@ Upload File With Long Filename
 #     [Documentation]     append, keep, replace
 #     No Operation
 
+Add Existing Metadata To Document Via API
+    ${rows}=    Get Metadata Type By Label    Seed Metadata 1
+    ${metadata_type_id}=    Set Variable    ${rows[0][0]}
+
+    ${resp}=    Add Metadata To Document Via API    ${metadata_type_id}    ${new_document_stub["id"]}
+    ${metadata_document}=   Set Variable    ${resp.json()["metadata_type"]}
+    
+    Should Be Equal As Integers     ${resp.status_code}     201
+    Dictionary Should Contain Key   ${metadata_document}    id
+
+    Should Be Equal     ${metadata_document["label"]}       Seed Metadata 1
+    
+    Wait For Metadata Document To Exist In DB       ${metadata_document["id"]}
+    Validate Metadata Added To Document    ${metadata_document["id"]}     ${new_document_stub["id"]}
+
+Add Duplicate Metadata To Document Via API
+    No Operation
+
+Add Non-existing Metadata To Document Via API
+    No Operation
+
+Add Existing Tag To Document Via API
+    No Operation
+
+Create Valid Document Via UI
+    No Operation
+
+Create Document Without Label Via UI
+    No Operation
+
+Create Duplicate Document Via UI
+    No Operation

@@ -160,3 +160,60 @@ Validate File Added To Document
     ${row}=                 Set Variable    ${rows}[0]
     Should Not Be Empty     ${row}
     Should Be Equal         ${row[2]}       ${filename}
+
+Add Metadata To Document Via API
+    [Documentation]     Add specified metadata to specified document.
+    [Arguments]         ${metadata_type_id}     ${id}
+
+    ${body}=    Create Dictionary   metadata_type_id=${metadata_type_id}   value=Some Random Value
+    ${resp}=    POST On Session     api         /api/v4/documents/${id}/metadata/    json=${body}
+    ...         headers=${HEADERS}
+
+    RETURN      ${resp}
+
+Get Metadata Document By ID
+    [Documentation]     Get id of metadata_documentmetadata using metadata type ID
+    [Arguments]         ${metadata_type_id}
+    ${rows}=            Query   
+    ...                 SELECT id,document_id,metadata_type_id FROM metadata_documentmetadata WHERE metadata_type_id = ${metadata_type_id}
+    RETURN              ${rows}
+
+Metadata Document Should Exist In DB
+    [Documentation]         Checks that `Get Metadata Document By Id` keyword does not return 
+    ...                     an empty list [].
+    [Arguments]             ${id}
+    ${rows}=                Get Metadata Document By ID  ${id}
+    Should Not Be Empty     ${rows}
+
+Wait For Metadata Document To Exist In DB
+    [Documentation]     Waits until given document exists in the database.
+    [Arguments]         ${id}       ${timeout}=30s      ${interval}=1s
+
+    Wait Until Keyword Succeeds     ${timeout}   ${interval}
+    ...                             Metadata Document Should Exist In DB     ${id}
+
+Validate Metadata Added To Document
+    [Documentation]     Checks that the given metadata exists in the document in
+    ...                 the database.
+    [Arguments]         ${metadata_id}     ${documnet_id}
+
+    ${rows}=                Get Metadata Document By ID     ${metadata_id}
+    Should Not Be Empty     ${rows}
+
+    ${matches}=    Evaluate    [r for r in ${rows} if r[1] == ${documnet_id}]
+    Length Should Be    ${matches}    1
+
+    # row = [id, document_id, metadata_id]
+    ${row}=                 Set Variable    ${matches}[0]
+    Should Not Be Empty     ${row}
+    Should Be Equal         ${row[1]}       ${documnet_id}
+
+Add Tag To Document Via API
+    [Documentation]     Add specified tag to specified document.
+    [Arguments]         ${tag_id}     ${id}
+
+    ${body}=    Create Dictionary   tag=${tag_id}
+    ${resp}=    POST On Session     api         /api/v4/documents/${id}/tags/attach/    json=${body}
+    ...         headers=${HEADERS}
+
+    RETURN      ${resp}
