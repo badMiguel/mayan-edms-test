@@ -35,7 +35,7 @@ Create Metadata Type Via UI
     Click Button    name=submit
 
 Get Metadata Type By ID
-    [Documentation]     Get cabinet using cabinet ID via database query.
+    [Documentation]     Get metadata type using metadata type ID via database query.
     [Arguments]         ${id}
     ${rows}=            Query   
     ...                 SELECT id,label,name FROM metadata_metadatatype WHERE id = ${id}
@@ -49,7 +49,7 @@ Metadata Type Should Exist In DB By ID
     Should Not Be Empty     ${rows} Metadata Type with id ${id} not found
 
 Wait For Metadata Type By ID To Exist In DB
-    [Documentation]     Waits until given cabinet exists in the database.
+    [Documentation]     Waits until given metadata type exists in the database.
     [Arguments]         ${id}   ${timeout}=10s      ${interval}=1s
 
     Wait Until Keyword Succeeds     ${timeout}   ${interval}
