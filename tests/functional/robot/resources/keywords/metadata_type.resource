@@ -7,6 +7,15 @@ Resource        ../variables.resource
 Resource        common.resource
 
 *** Keywords ***
+Set Metadata As Optional
+    [Documentation]     Create a metadata type through POST request on API path 
+    ...                 /api/v4/document_types/<document-type-id>/metadata_types/. 
+    [Arguments]         ${id}
+
+    ${body}=        Create Dictionary   required=${False}   metadata_type_id=${id}
+    ${resp}=        POST On Session     api         /api/v4/document_types/1/metadata_types/    json=${body}
+    ...             headers=${HEADERS}
+
 Create Metadata Type Via API
     [Documentation]     Create a metadata type through POST request on API path 
     ...                 /api/v4/metadata_types/. 
@@ -16,7 +25,6 @@ Create Metadata Type Via API
     ${resp}=        POST On Session     api         /api/v4/metadata_types/    json=${body}
     ...             headers=${HEADERS}
 
-    ${json}=    Set Variable    ${resp.json()} 
     RETURN      ${resp}
 
 Create Metadata Type Via UI
@@ -101,5 +109,3 @@ Validate Metadata Type In DB Via Label
     ${row}=     Set Variable    ${rows}[0]
     Should Not Be Empty    ${row}
     Should Be Equal     ${row[2]}    ${expected_name}
-
-

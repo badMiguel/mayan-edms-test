@@ -28,6 +28,8 @@ Create Valid Metadata Type Via API
     Wait For Metadata Type By ID To Exist In DB    ${new_metadata_type["id"]}
     Validate Metadata Type In DB Via ID    ${new_metadata_type["id"]}     ${new_metadata_type_label}     ${new_metadata_type_name}
 
+    Set Metadata As Optional    ${new_metadata_type["id"]}
+
 Create Metadata Type Without Label And Name Via API
     [Documentation]     Bad Case. Should NOT be able to create a new metadata 
     ...                 type via API if no label and name is specified 
@@ -83,6 +85,7 @@ Create Metadata Type With Long Label Via API
     ${resp}=            Create Metadata Type Via API    ${new_label_2}    ${new_name}
 
     Should Be Equal As Integers     ${resp.status_code}    201
+    Set Metadata As Optional        ${resp.json()["id"]}
 
 Create Metadata Type With Long Name Via API
     [Documentation]     Bad Case. Should NOT be able to create a new metadata type via
@@ -100,6 +103,7 @@ Create Metadata Type With Long Name Via API
     ${resp}=            Create Metadata Type Via API    ${new_label}    ${new_name_2}
 
     Should Be Equal As Integers     ${resp.status_code}    201
+    Set Metadata As Optional        ${resp.json()["id"]}
 
 Create Valid Metadata Type Via UI
     [Documentation]     Good Case. Create a metadata using the UI
@@ -118,6 +122,9 @@ Create Valid Metadata Type Via UI
 
     Wait For Metadata Type By Label To Exist In DB    ${new_label}
     Validate Metadata Type In DB Via Label            ${new_label}      ${new_name}
+
+    ${rows}=    Get Metadata Type By Label  ${new_label}
+    Set Metadata As Optional    ${rows[0][0]}
 
 Create Metadata Type Without Label And Name Via UI
     [Documentation]     Bad Case. Should NOT be able to create a new metadata type via
