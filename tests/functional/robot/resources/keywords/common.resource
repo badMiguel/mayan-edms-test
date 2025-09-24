@@ -38,7 +38,7 @@ Create Unique String
     ${label}=           Catenate    SEPARATOR=_     ${prefix}   ${time}
     RETURN              ${label}
 
-Create Very Long String
+Create String Length
     [Documentation]     Generate a label with character length 1000.
     [Arguments]         ${length}=1000  
     ${long_string}      Generate Random String      ${length}

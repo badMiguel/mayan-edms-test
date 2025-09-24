@@ -71,14 +71,14 @@ Create Metadata Type With Long Label Via API
     [Documentation]     Bad Case. Should NOT be able to create a new metadata type via
     ...                 API if label is greater than 48 characters.
 
-    ${new_label_1}=     Create Very Long String         49
+    ${new_label_1}=     Create String Length         49
     ${new_name}=        Create Unique String            Metadata_Type_Name
     ${resp}=            Run Keyword And Expect Error    HTTPError: 400 Client Error: Bad Request*
     ...                 Create Metadata Type Via API    ${new_label_1}    ${new_name}
 
     Should Contain     ${resp}  400
 
-    ${new_label_2}=     Create Very Long String         48
+    ${new_label_2}=     Create String Length         48
     ${new_name}=        Create Unique String            Metadata_Type_Label
     ${resp}=            Create Metadata Type Via API    ${new_label_2}    ${new_name}
 
@@ -88,14 +88,14 @@ Create Metadata Type With Long Name Via API
     [Documentation]     Bad Case. Should NOT be able to create a new metadata type via
     ...                 API if name is greater than 48 characters.
 
-    ${new_name_1}=      Create Very Long String         49
+    ${new_name_1}=      Create String Length         49
     ${new_label}=       Create Unique String            Metadata_Type_Name
     ${resp}=            Run Keyword And Expect Error    HTTPError: 400 Client Error: Bad Request*
     ...                 Create Metadata Type Via API    ${new_label}    ${new_name_1}
 
     Should Contain      ${resp}  400
 
-    ${new_name_2}=      Create Very Long String         48
+    ${new_name_2}=      Create String Length         48
     ${new_label}=       Create Unique String            Metadata_Type_Label
     ${resp}=            Create Metadata Type Via API    ${new_label}    ${new_name_2}
 

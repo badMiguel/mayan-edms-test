@@ -114,13 +114,13 @@ Create Cabinet With Very Long Label Via API
     [Documentation]     Bad Case. Should NOT be able to create a new cabinet via
     ...                 API if label is greater than 128 characters.
 
-    ${new_label}=   Create Very Long String         129
+    ${new_label}=   Create String Length         129
     ${resp}=        Run Keyword And Expect Error    HTTPError: 400 Client Error: Bad Request*
     ...             Create Cabinet Via API          ${new_label}    
 
     Should Contain     ${resp}  400
 
-    ${new_label}=   Create Very Long String         128
+    ${new_label}=   Create String Length         128
     ${resp}=        Create Cabinet Via API          ${new_label}    
 
     Should Be Equal As Integers     ${resp.status_code}    201
