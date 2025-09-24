@@ -5,6 +5,8 @@ Library         SeleniumLibrary
 Library         DatabaseLibrary
 Resource        ../variables.resource
 Resource        common.resource
+Resource        metadata_type.resource
+Resource        tags.resource
 
 *** Keywords ***
 Create Document Stub Via API
@@ -22,13 +24,25 @@ Create Document Stub Via API
 Add File To Document Stub Via API
     [Documentation]     Add a file to specified document through POST request on
     ...                 API path /api/v4/documents/<document_id>/files/.
-    [Arguments]         ${document_id}      ${action_name}      ${file_path} 
+    [Arguments]         ${document_id}      ${action_name}      ${filepath}=${FILE_PATH}    ${filename}=${FILENAME}
 
     ${auth}=        Create Dictionary   Authorization=Token ${AUTH_TOKEN}
-    ${files}=       Create Dictionary   file_new=@${FILE_PATH} 
-    ${body}=        Create Dictionary   action_name=${action_name}      filename=${FILENAME}
+    ${files}=       Create Dictionary   file_new=@${filepath} 
+    ${body}=        Create Dictionary   action_name=${action_name}      filename=${filename}
     ${resp}=        POST On Session     api                 /api/v4/documents/${document_id}/files/
     ...             data=${body}        headers=${auth}     files=${files}
+
+    RETURN      ${resp}
+
+Add No File To Document Stub Via API
+    [Documentation]     Add a file to specified document through POST request on
+    ...                 API path /api/v4/documents/<document_id>/files/.
+    [Arguments]         ${document_id}      ${action_name}
+
+    ${auth}=        Create Dictionary   Authorization=Token ${AUTH_TOKEN}
+    ${body}=        Create Dictionary   action_name=${action_name}
+    ${resp}=        POST On Session     api                 /api/v4/documents/${document_id}/files/
+    ...             data=${body}        headers=${auth}
 
     RETURN      ${resp}
 
@@ -121,7 +135,7 @@ Get File By ID
     RETURN              ${rows}
 
 File Should Exist In DB
-    [Documentation]         Checks that `Get Document Stub By Id` keyword does not return 
+    [Documentation]         Checks that `Get File By ID` keyword does not return 
     ...                     an empty list [].
     [Arguments]             ${id}
     ${rows}=                Get File By ID  ${id}

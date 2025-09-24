@@ -34,8 +34,75 @@ Upload File To Document Stub Via API
     [Documentation]     Good Case. Successfully uploads file to document stub via API.
 
     ${resp}=        Add File To Document Stub Via API    ${new_document_stub["id"]}
-    ...             replace     ${FILE_PATH}
+    ...             replace     ${FILEPATH}
 
     Should Be Equal As Integers         ${resp.status_code}     202
     Wait For File To Exist In DB        ${FILENAME}             id=${new_document_stub["id"]}
     Validate File Added To Document     ${FILENAME}             id=${new_document_stub["id"]}
+
+Create Document Stub Without Document Type Via API
+    [Documentation]     Bad Case. Should NOT be able to create a new document
+    ...                 stub via API without document type specified. 
+
+    ${resp}=        Run Keyword And Expect Error    HTTPError: 400 Client Error: Bad Request*
+    ...             Create Document Stub Via API    ${EMPTY}
+
+    Should Contain    ${resp}    400
+
+Create Document Stub With Non-existent Document Type Via API
+    [Documentation]     Bad Case. Should NOT be able to create a new document
+    ...                 stub via API if specified document type id does not exist
+
+    ${resp}=        Run Keyword And Expect Error    HTTPError: 404 Client Error: Not Found*
+    ...             Create Document Stub Via API    0
+
+    Should Contain    ${resp}    404
+
+Upload File To Document Stub Without Action Name And File Via API
+    [Documentation]     Bad Case. Should NOT be able to upload a file to document
+    ...                 stub via API if no action name and file specified
+
+    ${resp}=        Run Keyword And Expect Error    HTTPError: 400 Client Error: Bad Request*
+    ...             Add File To Document Stub Via API    ${new_document_stub["id"]}     ${EMPTY}    ${EMPTY} 
+
+    Should Contain    ${resp}    400
+
+Upload File To Document Stub Without Action Name Via API
+    [Documentation]     Bad Case. Should NOT be able to upload a file to document
+    ...                 stub via API if no action name specified
+
+    ${resp}=        Run Keyword And Expect Error    HTTPError: 400 Client Error: Bad Request*
+    ...             Add File To Document Stub Via API    ${new_document_stub["id"]}     ${EMPTY}    ${FILEPATH} 
+
+    Should Contain    ${resp}    400
+
+Upload File To Document Stub Without File Via API
+    [Documentation]     Bad Case. Should NOT be able to upload a file to document
+    ...                 stub via API if no file specified
+
+    ${resp}=        Run Keyword And Expect Error     HTTPError: 400 Client Error: Bad Request*
+    ...             Add No File To Document Stub Via API    ${new_document_stub["id"]}     replace
+
+    Should Contain    ${resp}    400
+
+Upload File With Long Filename
+    [Documentation]     Bad Case. Should NOT be able to upload a file to document
+    ...                 stub via API if fileaname > 255 characters.
+
+    ${long_filename}=   Create String Length    256
+    ${resp}=    Run Keyword And Expect Error    HTTPError: 400 Client Error: Bad Request*
+    ...         Add File To Document Stub Via API    ${new_document_stub["id"]}
+    ...         replace    ${FILEPATH}     filename=${long_filename}
+
+    Should Contain    ${resp}    400
+
+    ${short_filename}=  Create String Length    255
+    ${resp}=    Add File To Document Stub Via API    ${new_document_stub["id"]}     
+    ...         replace    ${FILEPATH}     filename=${short_filename} 
+
+    Should Be Equal As Integers     ${resp.status_code}     202
+
+# Upload File To Document Stub With Invalid Action Name Via API
+#     [Documentation]     append, keep, replace
+#     No Operation
+

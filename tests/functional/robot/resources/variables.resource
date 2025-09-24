@@ -7,7 +7,7 @@ ${BROWSER}      Chrome
 ${USERNAME}     admin
 ${PASSWORD}     YCFERznVuj
 
-${FILE_PATH}    ${CURDIR}/../data/TestFile.pdf
+${FILEPATH}     ${CURDIR}/../data/TestFile.pdf
 ${FILENAME}     TestFile.pdf
 
 # postgre 
