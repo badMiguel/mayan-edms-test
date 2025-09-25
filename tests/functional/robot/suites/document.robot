@@ -160,10 +160,41 @@ Add Non-existing Tag To Document Via API
     ...         Add Tag To Document Via API    0   ${new_document_stub["id"]}
 
 Create Valid Document Via UI
-    No Operation
+    [Documentation]     Create a document using the UI
+    Go To           ${BASE_URL}/sources/sources/documents/wizard/ 
 
-Create Document Without Label Via UI
-    No Operation
+    Wait Until Element Is Visible   css:span.select2-selection--single     15s
+    Click Element   css:span.select2-selection--single
+    Press Key       css:input.select2-search__field   \\13 
+
+    Wait Until Element Is Visible   name=document_type_selection-     15s
+    Click Button    name=document_type_selection-
+    Wait Until Element Is Visible   id=id_metadata_entry-0-update     15s
+    Select Checkbox    id=id_metadata_entry-0-update
+    Wait Until Element Is Visible   name=metadata_entry-     15s
+    Click Button    name=metadata_entry-
+
+    Wait Until Element Is Visible   css:span.select2-selection--multiple     15s
+    Press Key           css:span.select2-selection--multiple   \\13 
+    Click Element       class:select2-results__option--highlighted
+    Wait Until Element Is Visible   name=tag_selection-     15s
+    Click Button    name=tag_selection-
+
+    Wait Until Element Is Visible   css:span.select2-selection--multiple     15s
+    Press Key           css:span.select2-selection--multiple   \\13 
+    Click Element       class:select2-results__option--highlighted
+    Wait Until Element Is Visible   name=cabinet_selection-     15s
+    Click Button    name=cabinet_selection-
+
+    Wait Until Page Contains Element    id:id_source-file
+    ${normalised}=  Normalize Path  ${FILEPATH}
+    Choose File    id=id_source-file    ${normalised}
+    Execute JavaScript      var dz = Dropzone.instances[0];
+    ...                     var input = document.getElementById('id_source-file');
+    ...                     dz.addFile(input.files[0]);
+    Click Link      Default
+
+    Wait Until Page Contains    New document queued for upload and will be available shortly.    10s
 
 Create Duplicate Document Via UI
     No Operation
