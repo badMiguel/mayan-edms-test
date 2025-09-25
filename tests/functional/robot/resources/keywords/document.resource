@@ -46,19 +46,6 @@ Add No File To Document Stub Via API
 
     RETURN      ${resp}
 
-Create Document Stub Via UI
-    # [Documentation]     Create a document using the UI
-    # [Arguments]         ${new_label}    
-    #
-    # Go To   ${BASE_URL}/documents/documents/create/
-    #
-    # Wait Until Element Is Visible   id=id_label     15s
-    # Wait Until Element Is Visible   name=submit     15s
-    #
-    # Input Text      id=id_label             ${new_label}
-    # Click Button    name=submit
-    No Operation
-
 Get Document Stub By ID
     [Documentation]     Get document using document ID via database query.
     [Arguments]         ${id}
@@ -254,3 +241,36 @@ Validate Tag Added To Document
     ${row}=                 Set Variable    ${matches}[0]
     Should Not Be Empty     ${row}
     Should Be Equal         ${row[1]}       ${documnet_id}
+
+Create Document Via UI
+    [Documentation]     Create a document using the UI
+    Go To           ${BASE_URL}/sources/sources/documents/wizard/ 
+
+    Wait Until Element Is Visible   css:span.select2-selection--single     15s
+    Click Element   css:span.select2-selection--single
+    Press Key       css:input.select2-search__field   \\13 
+
+    Wait Until Element Is Visible   name=document_type_selection-     15s
+    Click Button    name=document_type_selection-
+    Wait Until Element Is Visible   id=id_metadata_entry-0-update     15s
+    Select Checkbox    id=id_metadata_entry-0-update
+    Wait Until Element Is Visible   name=metadata_entry-     15s
+    Click Button    name=metadata_entry-
+
+    Wait Until Element Is Visible   css:span.select2-selection--multiple     15s
+    Press Key           css:span.select2-selection--multiple   \\13 
+    Click Element       class:select2-results__option--highlighted
+    Wait Until Element Is Visible   name=tag_selection-     15s
+    Click Button    name=tag_selection-
+
+    Wait Until Element Is Visible   css:span.select2-selection--multiple     15s
+    Press Key           css:span.select2-selection--multiple   \\13 
+    Click Element       class:select2-results__option--highlighted
+    Wait Until Element Is Visible   name=cabinet_selection-     15s
+    Click Button    name=cabinet_selection-
+
+    # Sleep for 2s 
+    Wait Until Page Contains Element    id:id_source-file
+    ${normalised}=  Normalize Path  ${FILEPATH}
+    Choose File     id:id_source-file    ${normalised}
+    Click Link      Default
