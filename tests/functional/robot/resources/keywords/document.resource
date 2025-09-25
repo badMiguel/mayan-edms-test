@@ -3,6 +3,8 @@ Documentation   Keywords for Cabinet Test Suite
 Library         RequestsLibrary
 Library         SeleniumLibrary
 Library         DatabaseLibrary
+Library         OperatingSystem
+Library         ../../libraries/upload_file.py
 Resource        ../variables.resource
 Resource        common.resource
 Resource        metadata_type.resource
@@ -24,13 +26,11 @@ Create Document Stub Via API
 Add File To Document Stub Via API
     [Documentation]     Add a file to specified document through POST request on
     ...                 API path /api/v4/documents/<document_id>/files/.
-    [Arguments]         ${document_id}      ${action_name}      ${filepath}=${FILE_PATH}    ${filename}=${FILENAME}
+    [Arguments]         ${document_id}      ${action_name}      ${filepath}=${FILEPATH}    ${filename}=${FILENAME}
 
     ${auth}=        Create Dictionary   Authorization=Token ${AUTH_TOKEN}
-    ${files}=       Create Dictionary   file_new=@${filepath} 
-    ${body}=        Create Dictionary   action_name=${action_name}      filename=${filename}
-    ${resp}=        POST On Session     api                 /api/v4/documents/${document_id}/files/
-    ...             data=${body}        headers=${auth}     files=${files}
+    ${resp}=        Upload File     ${BASE_URL}     ${document_id}      ${filepath}
+    ...                             ${filename}     ${action_name}      ${auth}               
 
     RETURN      ${resp}
 
