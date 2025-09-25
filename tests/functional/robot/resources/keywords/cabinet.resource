@@ -50,7 +50,7 @@ Cabinet Should Exist In DB By ID
     ...                     an empty list [].
     [Arguments]             ${id}
     ${rows}=                Get Cabinet By ID    ${id}
-    Should Not Be Empty     ${rows} Cabinet with id ${id} not found
+    Should Not Be Empty     ${rows} 
 
 Wait For Cabinet By ID To Exist In DB
     [Documentation]     Waits until given cabinet exists in the database.
@@ -71,7 +71,7 @@ Cabinet Should Exist In DB By Label
     ...                     an empty list [].
     [Arguments]             ${label}
     ${rows}=                Get Cabinet By Label    ${label}
-    Should Not Be Empty     ${rows} Cabinet with label ${label} not found
+    Should Not Be Empty     ${rows}
 
 Wait For Cabinet By Label To Exist In DB
     [Documentation]     Waits until given cabinet exists in the database.
