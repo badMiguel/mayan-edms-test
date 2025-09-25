@@ -196,5 +196,13 @@ Create Valid Document Via UI
 
     Wait Until Page Contains    New document queued for upload and will be available shortly.    10s
 
-Create Duplicate Document Via UI
-    No Operation
+Create Document Document Type Via UI
+    [Documentation]     Bad case. should not be able to create new document via
+    ...                 UI if no document type specified.
+
+    Go To           ${BASE_URL}/sources/sources/documents/wizard/ 
+
+    Wait Until Element Is Visible   name=document_type_selection-     15s
+    Click Button    name=document_type_selection-
+
+    Wait Until Page Contains    This field is required.    10s
