@@ -192,15 +192,18 @@ Create Valid Document Via UI
     Execute JavaScript      var dz = Dropzone.instances[0];
     ...                     var input = document.getElementById('id_source-file');
     ...                     dz.addFile(input.files[0]);
+
+    Wait Until Page Contains Element    css:.dz-complete    timeout=15s
     Click Link      Default
 
     Wait Until Page Contains    New document queued for upload and will be available shortly.    10s
 
-Create Document Document Type Via UI
+Create Document Without Document Type Via UI
     [Documentation]     Bad case. should not be able to create new document via
     ...                 UI if no document type specified.
 
     Go To           ${BASE_URL}/sources/sources/documents/wizard/ 
+
 
     Wait Until Element Is Visible   name=document_type_selection-     15s
     Click Button    name=document_type_selection-
