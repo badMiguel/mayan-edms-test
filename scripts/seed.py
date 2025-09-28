@@ -8,7 +8,7 @@ import psycopg2
 
 BASE = "http://localhost:8081"
 USERNAME = "admin"
-PASSWORD = "YCFERznVuj"
+PASSWORD = "QN5saLTCLX"
 DIR = os.getcwd()
 headers = {"Content-Type": "application/json"}
 

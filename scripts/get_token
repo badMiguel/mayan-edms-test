@@ -2,4 +2,4 @@
 
 curl -X POST http://localhost:8081/api/v4/auth/token/obtain/\?format\=json \
     -H "Content-Type: application/json" \
-    -d '{"username": "admin", "password": "YCFERznVuj"}'
+    -d '{"username": "admin", "password": "QN5saLTCLX"}'

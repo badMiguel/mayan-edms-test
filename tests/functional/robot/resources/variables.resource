@@ -5,7 +5,7 @@ Documentation   Stores constant variables
 ${BASE_URL}     http://localhost:8081
 ${BROWSER}      Chrome
 ${USERNAME}     admin
-${PASSWORD}     YCFERznVuj
+${PASSWORD}     QN5saLTCLX
 
 ${FILEPATH}     ${CURDIR}/../data/TestFile.pdf
 ${FILENAME}     TestFile.pdf
