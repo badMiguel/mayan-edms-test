@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+robot --outputdir tests/functional/robot/results tests/functional/robot/
