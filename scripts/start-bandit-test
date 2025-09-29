@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+mkdir -p tests/non-functional/security/bandit
+bandit -r mayan-edms/ -f json -o tests/non-functional/security/bandit/results.json
