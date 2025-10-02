@@ -4,8 +4,13 @@ jmeter -n -t tests/non-functional/performance/performance_testing_module_A.jmx
 
 cd tests/non-functional/performance/results/
 
-find . -type d -mindepth 1 -exec sh -c '
+find . -mindepth 1 -maxdepth 1 -type d -exec sh -c '
 name=$(basename "{}")
+echo ---------------------------------------------
+echo 
+echo "$name"/html
+echo 
+echo 
 rm -r "$name"/html/
 jmeter -g "$name"/"$name"-results.csv -o "$name"/html/
 ' \;
