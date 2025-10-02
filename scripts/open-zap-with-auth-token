@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+token=$(scripts/get-token | jq -r '.token')
+export ZAP_AUTH_HEADER_VALUE="Token $token"
+
+/usr/share/zaproxy/zap.sh
