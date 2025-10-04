@@ -180,7 +180,9 @@ Create Valid Document Via UI
     Wait Until Element Is Visible   name=tag_selection-     15s
     Click Button    name=tag_selection-
 
-    Wait Until Element Is Visible   css:span.select2-selection--multiple     15s
+    Wait Until Page Contains Element    css:span.select2-selection--multiple    15s
+    Wait Until Element Is Visible       css:span.select2-selection--multiple    15s
+    Wait Until Element Is Enabled       css:span.select2-selection--multiple    15s
     Press Key           css:span.select2-selection--multiple   \\13 
     Click Element       class:select2-results__option--highlighted
     Wait Until Element Is Visible   name=cabinet_selection-     15s
